@@ -25,7 +25,7 @@ Provides the following software:
     
             $ vagrant plugin install vagrant-omnibus
 
-        Note: This step is **required** if using a box that does not distibute with Chef.
+        Note: This step is **required** if using a box that does not distribute with Chef.
         
     * OPTIONAL: vagrant-vbguest plugin (ensures VirtualBox Guest Additions is up-to-date on the Guest OS)
     
