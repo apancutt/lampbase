@@ -1,0 +1,3 @@
+source "https://supermarket.getchef.com"
+
+cookbook "lampbase", git: "git://github.com/apancutt/lampbase.git"

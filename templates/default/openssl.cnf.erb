@@ -1,0 +1,24 @@
+[ req ]
+distinguished_name  = req_distinguished_name
+
+[ req_distinguished_name ]
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[ v3_req_ca ]
+basicConstraints = CA:true
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+keyUsage = cRLSign, keyCertSign
+
+[ alt_names ]
+DNS.1 = localhost
+DNS.2 = <%= node["domain"] %>
+DNS.3 = *.<%= node["domain"] %>
+DNS.4 = *.*.<%= node["domain"] %>
+DNS.5 = *.*.*.<%= node["domain"] %>

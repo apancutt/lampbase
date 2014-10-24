@@ -1,0 +1,48 @@
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.require_version ">= 1.5.0"
+
+app_name = "myapp"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    # Allow Berkshelf to hijack the Vagrant provisioning workflow
+    config.berkshelf.enabled = true
+
+    # Ensure the latest version of Chef is installed on the guest VM
+    # Comment out this line if you don't have the vagrant-omnibus plugin installed
+    config.omnibus.chef_version = :latest
+
+    # Choose your preferred OS
+    config.vm.box = "chef/ubuntu-14.04"
+
+    # Configure the FQDN
+    config.vm.hostname = "#{app_name}.localhost.dev"
+
+    # Access the VM locally via this IP
+    config.vm.network "private_network", ip: "10.100.10.101"
+
+    # Mount the parent (project) directory onto the guest VM
+    # config.vm.synced_folder "..", "/var/www/#{config.vm.hostname}"
+
+    config.vm.provision :chef_solo do |chef|
+
+        chef.json = {
+
+            lampbase: {
+                app_name: app_name
+            },
+
+            mysql: {
+                # System passwords; you may want to set these to something more secure
+                server_root_password: "rootpass",
+                server_debian_password: "debpass",
+                server_repl_password: "replpass"
+            }
+
+        }
+
+        chef.run_list = ["recipe[lampbase::default]"]
+
+    end
+
+end
