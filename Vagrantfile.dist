@@ -21,9 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Access the VM locally via this IP
     config.vm.network "private_network", ip: "10.100.10.101"
 
-    # Mount the parent (project) directory onto the guest VM
-    # config.vm.synced_folder "..", "/var/www/#{config.vm.hostname}"
-
     config.vm.provision :chef_solo do |chef|
 
         chef.json = {
