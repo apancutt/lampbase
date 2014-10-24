@@ -17,17 +17,17 @@ Provides the following software:
 1. Ensure you have the following dependencies installed:
     * [Vagrant](https://www.vagrantup.com/downloads.html)
     * [Chef-DK](https://downloads.getchef.com/chef-dk/)
-    * vagrant-berkshelf plugin
+    * `vagrant-berkshelf` plugin
     
             $ vagrant plugin install vagrant-berkshelf
 
-    * OPTIONAL: vagrant-omnibus plugin (ensures Chef is installed on the Guest OS)
+    * OPTIONAL: `vagrant-omnibus` plugin (ensures Chef is installed on the Guest OS)
     
             $ vagrant plugin install vagrant-omnibus
 
         Note: This step is **required** if using a box that does not distribute with Chef.
         
-    * OPTIONAL: vagrant-vbguest plugin (ensures VirtualBox Guest Additions is up-to-date on the Guest OS)
+    * OPTIONAL: `vagrant-vbguest` plugin (ensures VirtualBox Guest Additions is up-to-date on the Guest OS)
     
             $ vagrant plugin install vagrant-vbguest
 
