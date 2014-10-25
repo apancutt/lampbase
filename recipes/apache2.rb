@@ -17,7 +17,7 @@ cookbook_file "ca.key" do
   owner "root"
   group "root"
   mode "0600"
-  cookbook node["locallamp"]["ca_key_file_cookbook"] if node["locallamp"]["ca_key_file_cookbook"]
+  cookbook node["lampbase"]["ca_key_file_cookbook"] if node["lampbase"]["ca_key_file_cookbook"]
   action :create_if_missing
 end
 
@@ -26,7 +26,7 @@ cookbook_file "ca.crt" do
   owner "root"
   group "root"
   mode "0644"
-  cookbook node["locallamp"]["ca_crt_file_cookbook"] if node["locallamp"]["ca_crt_file_cookbook"]
+  cookbook node["lampbase"]["ca_crt_file_cookbook"] if node["lampbase"]["ca_crt_file_cookbook"]
   action :create_if_missing
 end
 
@@ -34,7 +34,7 @@ unless ::File.exists?("#{node["apache"]["dir"]}/ssl/server.crt")
 
   template "#{node["apache"]["dir"]}/ssl/openssl.cnf" do
     source "openssl.cnf.erb"
-    cookbook node["locallamp"]["openssl_cnf_tmpl_cookbook"] if node["locallamp"]["openssl_cnf_tmpl_cookbook"]
+    cookbook node["lampbase"]["openssl_cnf_tmpl_cookbook"] if node["lampbase"]["openssl_cnf_tmpl_cookbook"]
   end
 
   execute "openssl_create_key" do
@@ -72,7 +72,7 @@ end
 
 web_app node["fqdn"] do
   template "vhost.conf.erb"
-  cookbook node["locallamp"]["vhost_tmpl_cookbook"] if node["locallamp"]["vhost_tmpl_cookbook"]
+  cookbook node["lampbase"]["vhost_tmpl_cookbook"] if node["lampbase"]["vhost_tmpl_cookbook"]
   server_name node["fqdn"]
   allow_override "all"
   docroot "#{node["apache"]["docroot_dir"]}/#{node["fqdn"]}/public"

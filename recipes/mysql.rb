@@ -10,14 +10,14 @@ connection_info = {
   :password => node["mysql"]["server_root_password"]
 }
 
-mysql_database node["locallamp"]["db_name"] do
+mysql_database node["lampbase"]["db_name"] do
   connection connection_info
   action :create
 end
 
-mysql_database_user node["locallamp"]["db_user"] do
+mysql_database_user node["lampbase"]["db_user"] do
   connection connection_info
-  password node["locallamp"]["db_password"]
-  database_name node["locallamp"]["db_name"]
+  password node["lampbase"]["db_password"]
+  database_name node["lampbase"]["db_name"]
   action :grant
 end
