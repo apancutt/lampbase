@@ -2,9 +2,9 @@
 default["lampbase"]["app_name"] = "myapp"
 
 # Database credentials for your application
-default["lampbase"]["db_name"] = node["lampbase"]["app_name"];
-default["lampbase"]["db_user"] = node["lampbase"]["app_name"];
-default["lampbase"]["db_pass"] = "#{node["lampbase"]["app_name"]}pass"
+default["lampbase"]["db_name"] = "myapp"
+default["lampbase"]["db_user"] = "myapp"
+default["lampbase"]["db_pass"] = "myapppass"
 
 # If you need to override any files/templates provided by this cookbook, create your own cookbook containing the
 # overridden file(s) and specify the name of your cookbook in the corresponding attribute.
