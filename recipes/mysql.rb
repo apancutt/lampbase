@@ -15,7 +15,7 @@ mysql_database node["lampbase"]["db_name"] do
   action :create
 end
 
-mysql_database_user node["lampbase"]["db_user"] do
+mysql_database_user node["lampbase"]["db_username"] do
   connection connection_info
   password node["lampbase"]["db_password"]
   database_name node["lampbase"]["db_name"]

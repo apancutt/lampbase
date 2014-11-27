@@ -28,8 +28,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             lampbase: {
                 app_name: app_name,
                 db_name: app_name,
-                db_user: app_name,
-                db_pass: "#{app_name}pass"
+                db_username: app_name,
+                db_password: app_name
             },
 
             mysql: {
