@@ -21,6 +21,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Access the VM locally via this IP
     config.vm.network "private_network", ip: "10.100.10.101"
 
+    # Mount the project folder into the document root
+    config.vm.synced_folder ".", "/var/www/#{app_name}.localhost.dev"
+
     config.vm.provision :chef_solo do |chef|
 
         chef.json = {
