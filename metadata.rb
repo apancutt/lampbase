@@ -1,5 +1,5 @@
 name             "lampbase"
-version          "0.0.2"
+version          "0.0.3"
 maintainer       "Adam Pancutt"
 maintainer_email "adam@pancutt.com"
 license          "Apache 2.0"
