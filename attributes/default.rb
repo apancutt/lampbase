@@ -15,3 +15,6 @@ default["lampbase"]["ca_key_file_cookbook"] = false
 default["lampbase"]["ca_crt_file_cookbook"] = false
 default["lampbase"]["openssl_cnf_tmpl_cookbook"] = false
 default["lampbase"]["vhost_tmpl_cookbook"] = false
+
+# mod_php5 requires mpm_prefork, Apache 2.4 on Ubuntu 14.04 uses mpm_event
+default["apache"]["mpm"] = "prefork"
