@@ -1,6 +1,9 @@
 # The machine-name of your application
 default["lampbase"]["app_name"] = "myapp"
 
+# The document root of your application
+default["lampbase"]["vhost_docroot"] = "/vagrant/public"
+
 # Database credentials for your application
 default["lampbase"]["db_name"] = "myapp"
 default["lampbase"]["db_username"] = "myapp"

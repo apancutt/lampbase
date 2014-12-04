@@ -75,7 +75,7 @@ web_app node["fqdn"] do
   cookbook node["lampbase"]["vhost_tmpl_cookbook"] if node["lampbase"]["vhost_tmpl_cookbook"]
   server_name node["fqdn"]
   allow_override "all"
-  docroot "#{node["apache"]["docroot_dir"]}/#{node["fqdn"]}/public"
+  docroot node["lampbase"]["vhost_docroot"]
   ssl_enabled true
   ssl_ca "#{node["apache"]["dir"]}/ssl/ca.crt"
   ssl_crt "#{node["apache"]["dir"]}/ssl/server.crt"
