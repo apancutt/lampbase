@@ -1,5 +1,5 @@
 include_recipe "mysql::server"
-include_recipe "database::mysql"
+include_recipe "database"
 
 
 # Create the application database and user
