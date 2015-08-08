@@ -1,3 +1,6 @@
 include_recipe "lampbase::apache2"
+include_recipe "lampbase::memcached"
 include_recipe "lampbase::mysql"
+include_recipe "lampbase::nodejs"
 include_recipe "lampbase::php"
+include_recipe "lampbase::redis"

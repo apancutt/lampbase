@@ -5,43 +5,56 @@ app_name = "myapp"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    # Allow Berkshelf to hijack the Vagrant provisioning workflow
-    config.berkshelf.enabled = true
+    if Vagrant.has_plugin?("vagrant-berkshelf")
+        config.berkshelf.enabled = true
+    else
+        puts "ERROR: The vagrant-berkshelf plugin is not installed!"
+        puts "You can install it now by running: vagrant plugin install vagrant-berkshelf"
+        exit 1
+    end
 
-    # Ensure the latest version of Chef is installed on the guest VM
-    # Comment out this line if you don't have the vagrant-omnibus plugin installed
-    config.omnibus.chef_version = :latest
+    if Vagrant.has_plugin?("vagrant-hostmanager")
+        config.hostmanager.enabled = true
+        config.hostmanager.manage_host = true
+    end
 
-    # Choose your preferred OS
+    if Vagrant.has_plugin?("vagrant-omnibus")
+        #config.omnibus.chef_version = :latest
+    end
+
     config.vm.box = "chef/ubuntu-14.04"
+    config.vm.hostname = "#{app_name}.dev"
+    config.vm.network "private_network", ip: "10.100.100.101"
 
-    # Configure the FQDN
-    config.vm.hostname = "#{app_name}.localhost.dev"
-
-    # Access the VM locally via this IP
-    config.vm.network "private_network", ip: "10.100.10.101"
+    config.vm.provider :provider do | provider |
+        provider.name = config.vm.hostname
+    end
 
     config.vm.provision :chef_solo do |chef|
 
         chef.json = {
 
-            lampbase: {
-                app_name: app_name,
-                db_name: app_name,
-                db_username: app_name,
-                db_password: app_name
+            "lampbase" => {
+                "db_name"          => app_name,
+                "db_username"      => "#{app_name}_user",
+                "db_password"      => "#{app_name}_pwd",
+                "db_root_password" => "root_pwd"
             },
 
-            mysql: {
-                # System passwords; you may want to set these to something more secure
-                server_root_password: "rootpass",
-                server_debian_password: "debpass",
-                server_repl_password: "replpass"
+            "php" => {
+                "directives" => {
+                    "display_errors"  => "On",
+                    "error_reporting" => "32767", # E_ALL
+                    "date.timezone"   => "UTC"
+                },
+                "packages" => [
+                    "php5-mcrypt" # Any additional PHP packages your app requires
+                ]
             }
 
         }
 
-        chef.run_list = ["recipe[lampbase::default]"]
+        chef.run_list = ["recipe[lampbase]"]
 
     end
 

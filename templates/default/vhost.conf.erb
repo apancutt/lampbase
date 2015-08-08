@@ -1,54 +1,52 @@
 <VirtualHost *:<%= @params[:server_port] || node["apache"]["listen_ports"].first %>>
 
-  ServerName <%= @params[:server_name] %>
-  <% if @params[:server_aliases] -%>
-  ServerAlias <%= @params[:server_aliases].join " " %>
-  <% end -%>
-
-  DocumentRoot <%= @params[:docroot] %>
-  <Directory <%= @params[:docroot] %>>
-    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
-    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
-    <% if node["apache"]["version"] == "2.4" -%>
-    Require all granted
-    <% else -%>
-    Order allow,deny
-    Allow from all
+    ServerName <%= @params[:server_name] || node["fqdn"] %>
+    <% if @params[:server_aliases] -%>
+    ServerAlias <%= @params[:server_aliases].join " " %>
     <% end -%>
-  </Directory>
 
-  ErrorLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] %>-error.log
-  CustomLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] %>-access.log combined
+    DocumentRoot <%= @params[:docroot] || node["lampbase"]["apache_docroot"] %>
+    <Directory <%= @params[:docroot] || node["lampbase"]["apache_docroot"] %>>
+        Options <%= [@params[:directory_options] || node["lampbase"]["apache_options"]].flatten.join " " %>
+        AllowOverride <%= [@params[:allow_override] || node["lampbase"]["apache_allow_override"]].flatten.join " " %>
+        <% if node["apache"]["version"] == "2.4" -%>
+        Require all granted
+        <% else -%>
+        Order allow,deny
+        Allow from all
+        <% end -%>
+    </Directory>
+
+    ErrorLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] || node["fqdn"] %>-error.log
+    CustomLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] || node["fqdn"] %>-access.log combined
 
 </VirtualHost>
 
-<% if @params[:ssl_enabled] -%>
 <VirtualHost *:<%= @params[:ssl_server_port] || 443 %>>
 
-  ServerName <%= @params[:server_name] %>
-  <% if @params[:server_aliases] -%>
-  ServerAlias <%= @params[:server_aliases].join " " %>
-  <% end -%>
-
-  DocumentRoot <%= @params[:docroot] %>
-  <Directory <%= @params[:docroot] %>>
-    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
-    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
-    <% if node["apache"]["version"] == "2.4" -%>
-    Require all granted
-    <% else -%>
-    Order allow,deny
-    Allow from all
+    ServerName <%= @params[:server_name] || node["fqdn"] %>
+    <% if @params[:server_aliases] -%>
+    ServerAlias <%= @params[:server_aliases].join " " %>
     <% end -%>
-  </Directory>
 
-  SSLEngine On
-  SSLCACertificateFile <%= @params[:ssl_ca] %>
-  SSLCertificateFile <%= @params[:ssl_crt] %>
-  SSLCertificateKeyFile <%= @params[:ssl_key] %>
+    DocumentRoot <%= @params[:docroot] || node["lampbase"]["apache_docroot"] %>
+    <Directory <%= @params[:docroot] || node["lampbase"]["apache_docroot"] %>>
+        Options <%= [@params[:directory_options] || node["lampbase"]["apache_options"]].flatten.join " " %>
+        AllowOverride <%= [@params[:allow_override] || node["lampbase"]["apache_allow_override"]].flatten.join " " %>
+        <% if node["apache"]["version"] == "2.4" -%>
+        Require all granted
+        <% else -%>
+        Order allow,deny
+        Allow from all
+        <% end -%>
+    </Directory>
 
-  ErrorLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] %>-ssl-error.log
-  CustomLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] %>-ssl-access.log combined
+    SSLEngine On
+    SSLCACertificateFile <%= @params[:ssl_ca] || "#{node["apache"]["dir"]}/ssl/ca.crt" %>
+    SSLCertificateFile <%= @params[:ssl_crt] || "#{node["apache"]["dir"]}/ssl/#{node["fqdn"]}.crt" %>
+    SSLCertificateKeyFile <%= @params[:ssl_key] || "#{node["apache"]["dir"]}/ssl/#{node["fqdn"]}.key"%>
+
+    ErrorLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] || node["fqdn"] %>-ssl-error.log
+    CustomLog <%= node["apache"]["log_dir"] %>/<%= @params[:server_name] || node["fqdn"] %>-ssl-access.log combined
 
 </VirtualHost>
-<% end -%>

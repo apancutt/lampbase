@@ -1,5 +1,5 @@
 [ req ]
-distinguished_name  = req_distinguished_name
+distinguished_name = req_distinguished_name
 
 [ req_distinguished_name ]
 
@@ -17,8 +17,5 @@ authorityKeyIdentifier=keyid:always,issuer
 keyUsage = cRLSign, keyCertSign
 
 [ alt_names ]
-DNS.1 = localhost
-DNS.2 = <%= node["domain"] %>
-DNS.3 = *.<%= node["domain"] %>
-DNS.4 = *.*.<%= node["domain"] %>
-DNS.5 = *.*.*.<%= node["domain"] %>
+DNS.1 = <%= node["fqdn"] %>
+DNS.2 = *.<%= node["fqdn"] %>

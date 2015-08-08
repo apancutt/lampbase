@@ -1,20 +1,11 @@
-# The machine-name of your application
-default["lampbase"]["app_name"] = "myapp"
+default["lampbase"]["apache_allow_override"] = "All"
+default["lampbase"]["apache_docroot"]        = "/vagrant/public"
+default["lampbase"]["apache_options"]        = "FollowSymLinks"
 
-# The document root of your application
-default["lampbase"]["vhost_docroot"] = "/vagrant/public"
-
-# Database credentials for your application
-default["lampbase"]["db_name"] = "myapp"
-default["lampbase"]["db_username"] = "myapp"
-default["lampbase"]["db_password"] = "myapp"
-
-# If you need to override any files/templates provided by this cookbook, create your own cookbook containing the
-# overridden file(s) and specify the name of your cookbook in the corresponding attribute.
-default["lampbase"]["ca_key_file_cookbook"] = false
-default["lampbase"]["ca_crt_file_cookbook"] = false
-default["lampbase"]["openssl_cnf_tmpl_cookbook"] = false
-default["lampbase"]["vhost_tmpl_cookbook"] = false
-
-# mod_php5 requires mpm_prefork, Apache 2.4 on Ubuntu 14.04 uses mpm_event
-default["apache"]["mpm"] = "prefork"
+default["lampbase"]["db_name"]      = "changeme"
+default["lampbase"]["db_username"]  = "changeme"
+default["lampbase"]["db_password"]  = "changeme"
+default["lampbase"]["db_password"]  = "changeme"
+default["lampbase"]["db_host"]      = "%"
+default["lampbase"]["db_encoding"]  = "utf8"
+default["lampbase"]["db_collation"] = "utf8_unicode_ci"
